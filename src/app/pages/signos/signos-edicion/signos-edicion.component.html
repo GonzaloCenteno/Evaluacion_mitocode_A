@@ -1,0 +1,66 @@
+<mat-toolbar>Registro de Signos Vitales</mat-toolbar>
+
+<form class="example-container" [formGroup]="form" #formSignosVitales="ngForm" (ngSubmit)="guardar_datos()">
+
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID" required formControlName="id">
+        </mat-form-field>
+    </div>
+
+
+    <mat-grid-list cols="6" rowHeight="100px">
+
+        <mat-grid-tile colspan="4" rowspan="1">
+            <mat-form-field>
+                <input type="text" placeholder="ESCRIBIR NOMBRE DEL PACIENTE" matInput [matAutocomplete]="autoPaciente"
+                    [formControl]="myControlPaciente" formControlName="paciente" autocomplete="off" required>
+            </mat-form-field>
+            <mat-autocomplete #autoPaciente="matAutocomplete" [displayWith]="mostrarPaciente"
+                (optionSelected)="seleccionarPaciente($event)">
+                <mat-option *ngFor="let p of pacientesFiltrados | async" [value]="p">
+                    {{ p.nombres }} {{p.apellidos}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2" rowspan="1">
+             <button mat-raised-button color="primary" type="button" (click)="abrirDialogoPaciente()">
+                <mat-icon>assignment_ind</mat-icon>
+                <span>NUEVO PACIENTE</span>
+            </button>   
+        </mat-grid-tile>
+
+    </mat-grid-list>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="SELECCIONAR UNA FECHA" [max]="maxFecha"
+            formControlName="fecha" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="ESCRIBIR LA TEMPERATURA" required formControlName="temperatura" autocomplete="off">
+        <div *ngIf="f.temperatura.errors?.required" class="invalido">Temperatura es requerido</div>
+        <div *ngIf="f.temperatura.errors?.minlength" class="invalido">El campo debe ser mayor a 3 caracteres</div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="ESCRIBIR EL PULSO" required formControlName="pulso" autocomplete="off" type="number">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="ESCRIBIR EL RITMO RESPIRATORIO" required formControlName="ritmo_respiratorio" autocomplete="off">
+        <div *ngIf="f.ritmo_respiratorio.errors?.required" class="invalido">Ritmo Cardiaco es requerido</div>
+        <div *ngIf="f.ritmo_respiratorio.errors?.minlength" class="invalido">El campo debe ser mayor a 3 caracteres</div>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="formSignosVitales.invalid">GUARDAR DATOS</button>
+
+    <button mat-raised-button color="accent" routerLink='/signos' type="button">
+        <mat-icon>close</mat-icon>
+        <span>CANCELAR</span>
+    </button>
+
+</form>

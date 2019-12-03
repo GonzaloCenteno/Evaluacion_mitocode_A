@@ -1,0 +1,35 @@
+<mat-toolbar>Nuevo Paciente</mat-toolbar>
+<br>
+<div class="example-container">
+    <form class="example-container" [formGroup]="form" #formPacientes="ngForm" (ngSubmit)="guardar_datos()">
+        <mat-form-field>
+            <input matInput placeholder="ESCRIBIR NOMBRES" formControlName="nombres" autocomplete="off" type="text" required>
+            <div *ngIf="f.nombres.errors?.required" class="invalido">Nombres es requerido</div>
+            <div *ngIf="f.nombres.errors?.minlength" class="invalido">El campo debe ser mayor a 3 caracteres</div>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ESCRIBIR APELLIDOS" formControlName="apellidos" autocomplete="off" type="text" required>
+            <div *ngIf="f.apellidos.errors?.required" class="invalido">Apellidos es requerido</div>
+            <div *ngIf="f.apellidos.errors?.minlength" class="invalido">El campo debe ser mayor a 3 caracteres</div>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ESCRIBIR EMAIL" formControlName="email" autocomplete="off" type="email" required>
+            <div *ngIf="f.email.errors?.email" class="invalido">Debe ser un email Correcto</div>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ESCRIBIR TELEFONO" formControlName="telefono" autocomplete="off" type="text" required>
+            <div *ngIf="f.telefono.errors?.minlength" class="invalido">El campo debe tener como minimo 9 caracteres</div>
+            <div *ngIf="f.telefono.errors?.maxlength" class="invalido">El campo debe tener como maximo 9 caracteres</div>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ESCRIBIR DNI" formControlName="dni" autocomplete="off" type="text" max="8" required>
+            <div *ngIf="f.dni.errors?.required" class="invalido">DNI es requerido</div>
+            <div *ngIf="f.dni.errors?.minlength" class="invalido">El campo debe tener como minimo 8 caracteres</div>
+            <div *ngIf="f.dni.errors?.maxlength" class="invalido">El campo debe tener como maximo 8 caracteres</div>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formPacientes.invalid">ACEPTAR</button>
+        <br>
+        <button mat-raised-button color="accent" (click)="cancelar()" type="button">CANCELAR</button>
+    </form>
+</div>
